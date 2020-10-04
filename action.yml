@@ -9,6 +9,9 @@ inputs:
     default: '0.1.0'
   commit-sha:
     description: optional commit sha to apply the tag to
+  if-exists:
+    description: what to do if the tag already exists: 'fail', 'replace' or 'ignore'
+    default: 'fail'
 runs:
   using: 'node12'
   main: 'dist/index.js'

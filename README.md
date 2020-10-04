@@ -33,3 +33,18 @@ An optional commit sha can be specified to override the default
         tag: "my_tag"
         commit-sha: abc123
 ```
+
+If the tag already exists, the action will fail. You can change this behavior with `if-exists`:
+* `if-exists: fail` is the default.
+* `if-exists: ignore` will leave the existing tag and do nothing.
+* `if-exists: replace` will delete the existing tag before recreating it.
+
+```yaml
+    steps:
+    - name: Tag commit
+      uses: tvdias/github-tagger@v0.0.1
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        tag: "my_tag"
+        move-existing: true
+```
