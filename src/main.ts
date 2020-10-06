@@ -2,7 +2,6 @@ import * as core from "@actions/core";
 import * as github from "@actions/github";
 
 const ifExistsActions = ["fail", "replace", "ignore"] as const;
-type IfExistsAction = typeof ifExistsActions[number];
 
 async function run() {
   try {
@@ -10,9 +9,8 @@ async function run() {
     const tag = core.getInput("tag", { required: true });
     const sha =
       core.getInput("commit-sha", { required: false }) || github.context.sha;
-    const moveExistingStr = core.getInput("if-exists", { required: false });
-    const moveExisting: IfExistsAction =
-      ifExistsActions.find(x => x === moveExistingStr) || "fail";
+    const ifExistsStr = core.getInput("if-exists", { required: false });
+    const ifExists = ifExistsActions.find(x => x === ifExistsStr) || "fail";
 
     const client = new github.GitHub(token);
 
@@ -28,7 +26,8 @@ async function run() {
     if (exists) {
       const msg = `Tag ${tag} already exists.`;
       core.debug(msg);
-      switch (moveExisting) {
+      core.debug(`if-exists: ${ifExists}`);
+      switch (ifExists) {
         case "fail":
           core.setFailed(msg);
           return;
