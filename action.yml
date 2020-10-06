@@ -10,7 +10,7 @@ inputs:
   commit-sha:
     description: optional commit sha to apply the tag to
   if-exists:
-    description: what to do if the tag already exists: 'fail', 'replace' or 'ignore'
+    description: 'what to do if the tag already exists: "fail", "replace" or "ignore"'
     default: 'fail'
 runs:
   using: 'node12'
